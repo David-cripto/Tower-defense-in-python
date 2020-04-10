@@ -39,13 +39,19 @@ class Music:
         pygame.mixer.music.unpause()
 
 
-def gen(n):
+def gen(n, vel):
     temp = []
     x = 0
     y = 80
+    if n >= 4:
+        temp.append(Enemy.Troll(x, y, vel - 0.3))
+        x -= 50
+    if n >= 8:
+        temp.append(Enemy.Troll(x, y, vel - 0.3))
+        x -= 50
     for i in range(n):
-        temp.append(Enemy.Enem(x, y))
-        x -= 80
+        temp.append(Enemy.Enem(x, y, vel))
+        x -= 50
     return temp
 
 
@@ -60,15 +66,15 @@ class Game:
         self.mus = Music()
         self.money = 500
         self.towers = []
-        self.waves = [gen(2), gen(4), gen(6), gen(7), gen(8)]
+        self.waves = [gen(2, 1), gen(4, 1.1), gen(6, 1.2), gen(7, 1.3), gen(8, 1.4), gen(10, 1.7)]
         self.waves_i = 0
         self.enemies = self.waves[self.waves_i]
         self.health = 10
         self.graph = Graphics()
         self.wn = False
-        self.tower_place = [[281, 153 - 40, False], [447, 152 - 40, False], [656, 166 - 40, False],
-                            [546, 341 - 40, False], [270, 387 - 40, False],
-                            [363, 514 - 40, False], [539, 515 - 40, False]]
+        self.tower_place = [[281, 113, False], [447, 112, False], [656, 126, False],
+                            [546, 301, False], [270, 347, False],
+                            [363, 474, False], [539, 475, False]]
 
     def run(self):
         r = True
@@ -119,6 +125,19 @@ class Game:
                                         self.towers.append(temp)
                                         self.money -= temp.price
                                         self.tower_place[i][2] = True
+                        if buttons.ty == "ArcherTower1":
+                            temp = Towers.ArcherTower1(0, 0)
+                            if self.money >= temp.price:
+                                pos = pygame.mouse.get_pos()
+                                for i in range(len(self.tower_place)):
+                                    if abs(self.tower_place[i][0] - pos[0]) <= 25 and abs(
+                                            self.tower_place[i][1] - pos[1]) <= 20 and not self.tower_place[i][2]:
+                                        pos1 = self.tower_place[i][0]
+                                        pos2 = self.tower_place[i][1]
+                                        temp = Towers.ArcherTower1(pos1, pos2)
+                                        self.towers.append(temp)
+                                        self.money -= temp.price
+                                        self.tower_place[i][2] = True
                         buttons.selected = False
                         pygame.mouse.set_visible(True)
             for i in range(len(self.enemies)):
@@ -129,7 +148,7 @@ class Game:
                 self.enemies[i].move()
                 if not self.enemies[i].live:
                     self.enemies.pop(i)
-                    self.money += 30
+                    self.money += 50
                     break
             for t in self.towers:
                 t.fire(self.enemies)
@@ -148,6 +167,8 @@ class Game:
                 pos = pygame.mouse.get_pos()
                 if buttons.ty == "ArcherTower":
                     temp = Towers.ArcherTower(*pygame.mouse.get_pos())
+                if buttons.ty == "ArcherTower1":
+                    temp = Towers.ArcherTower1(*pygame.mouse.get_pos())
                 self.win.blit(temp.img,
                               (pos[0] - temp.img.get_width() // 2, pos[1] - temp.img.get_height() // 2))
                 for tmp in self.tower_place:
@@ -159,7 +180,7 @@ class Game:
             self.win.blit(img, (self.width // 2 - img.get_width() // 2, self.height // 2 - img.get_height() // 2))
         pygame.display.update()
         if self.wn:
-            time.sleep(5)
+            time.sleep(1)
 
 
 g = Game()

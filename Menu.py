@@ -32,10 +32,14 @@ class VerticalButton(Button):
 
 class Menu:
     def all_buttons(self):
-        img_button_52 = pygame.image.load("32.png")
-        img_button_52 = pygame.transform.scale(img_button_52, (70, 60))
-        button_52 = VerticalButton(img_button_52, 250, "ArcherTower")
-        self.add_button(button_52)
+        img_button_32 = pygame.image.load("32.png")
+        img_button_32 = pygame.transform.scale(img_button_32, (70, 60))
+        button_32 = VerticalButton(img_button_32, 250, "ArcherTower")
+        self.add_button(button_32)
+        img_button_34 = pygame.image.load("34.png")
+        img_button_34 = pygame.transform.scale(img_button_34, (70, 60))
+        button_34 = VerticalButton(img_button_34, 300, "ArcherTower1")
+        self.add_button(button_34)
 
     def add_button(self, button):
         button.x = self.x

@@ -48,13 +48,42 @@ class ArcherTower(Towers):
         self.width = self.img.get_width()
         self.height = self.img.get_height()
         self.damage = 25
-        self.radius_damage = 100
+        self.radius_damage = 160
         self.radius = 20
         self.fire_b = False
         self.i = 0
         ''''''
-        self.img_per = [pygame.image.load("38.png"), pygame.image.load("39.png"), pygame.image.load("40.png"),
-                        pygame.image.load("41.png"), pygame.image.load("42.png"), pygame.image.load("43.png")]
+        self.img_per = []
+        for i in range(38, 44):
+            self.img_per.append(pygame.image.load("" + str(i) + ".png"))
+        for i in range(len(self.img_per)):
+            self.img_per[i] = pygame.transform.scale(self.img_per[i], (25, 30))
+        ''''''
+        self.attack_speed = 5
+        self.bul = None
+
+
+class ArcherTower1(Towers):
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.sell_pr = 200
+        self.price = 300
+        ''''''
+        self.img = pygame.image.load("12.png")
+        self.img = pygame.transform.scale(self.img, (80, 120))
+        ''''''
+        self.width = self.img.get_width()
+        self.height = self.img.get_height()
+        self.damage = 38
+        self.radius_damage = 120
+        self.radius = 10
+        self.fire_b = False
+        self.i = 0
+        ''''''
+        self.img_per = []
+        for i in range(51, 64):
+            self.img_per.append(pygame.image.load("" + str(i) + ".png"))
         for i in range(len(self.img_per)):
             self.img_per[i] = pygame.transform.scale(self.img_per[i], (25, 30))
         ''''''
