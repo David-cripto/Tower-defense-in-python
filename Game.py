@@ -6,24 +6,27 @@ import time
 
 pygame.init()
 
+white = (255, 255, 255)
+size_for_img = (50, 50)
+
 
 class Graphics:
     def __init__(self):
         self.star_img = pygame.image.load("star.png")
-        self.star_img.set_colorkey((255, 255, 255))
-        self.star_img = pygame.transform.scale(self.star_img, (50, 50))
+        self.star_img.set_colorkey(white)
+        self.star_img = pygame.transform.scale(self.star_img, size_for_img)
         self.health_img = pygame.image.load("health.png")
-        self.health_img.set_colorkey((255, 255, 255))
-        self.health_img = pygame.transform.scale(self.health_img, (50, 50))
+        self.health_img.set_colorkey(white)
+        self.health_img = pygame.transform.scale(self.health_img, size_for_img)
 
     def draw(self, win, money, health):
         win.blit(self.star_img, (20, 500))
         text = pygame.font.SysFont("arial", 50)
-        text = text.render(str(money), 1, (255, 255, 255))
+        text = text.render(str(money), 1, white)
         win.blit(text, (75, 500))
         win.blit(self.health_img, (20, 450))
         text = pygame.font.SysFont("arial", 50)
-        text = text.render(str(health), 1, (255, 255, 255))
+        text = text.render(str(health), 1, white)
         win.blit(text, (75, 450))
 
 
@@ -72,9 +75,11 @@ class Game:
         self.health = 10
         self.graph = Graphics()
         self.wn = False
-        self.tower_place = [[281, 113, False], [447, 112, False], [656, 126, False],
-                            [546, 301, False], [270, 347, False],
-                            [363, 474, False], [539, 475, False]]
+        self.tower_place = [[281, 113], [447, 112], [656, 126],
+                            [546, 301], [270, 347],
+                            [363, 474], [539, 475]]
+        for i in self.tower_place:
+            i.append(False)
 
     def run(self):
         r = True
